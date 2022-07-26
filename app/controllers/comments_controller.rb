@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
       if @comment.save!
         format.js { render :index }
       else
-        format.html { redirect_to article_path(@article), notice: I18n.t('views.messages.failed_to_post') }
+        format.html { redirect_to article_path(@article), notice: I18n.t("views.messages.failed_to_post") }
       end
     end
   end
@@ -24,10 +24,10 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    if @comment.destroy
-      respond_to do |format|
-        format.js { render :index }
-      end
+    return unless @comment.destroy
+
+    respond_to do |format|
+      format.js { render :index }
     end
   end
 
