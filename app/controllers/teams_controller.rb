@@ -15,32 +15,34 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
-  def edit; end
+  def edit
+    redirect_to team_path(@team), notice: "オーナー以外は編集不可！" unless current_user == @team.owner
+  end
 
   def create
     @team = Team.new(team_params)
     @team.owner = current_user
     if @team.save
       @team.invite_member(@team.owner)
-      redirect_to @team, notice: I18n.t('views.messages.create_team')
+      redirect_to @team, notice: I18n.t("views.messages.create_team")
     else
-      flash.now[:error] = I18n.t('views.messages.failed_to_save_team')
+      flash.now[:error] = I18n.t("views.messages.failed_to_save_team")
       render :new
     end
   end
 
   def update
     if @team.update(team_params)
-      redirect_to @team, notice: I18n.t('views.messages.update_team')
+      redirect_to @team, notice: I18n.t("views.messages.update_team")
     else
-      flash.now[:error] = I18n.t('views.messages.failed_to_save_team')
+      flash.now[:error] = I18n.t("views.messages.failed_to_save_team")
       render :edit
     end
   end
 
   def destroy
     @team.destroy
-    redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
+    redirect_to teams_url, notice: I18n.t("views.messages.delete_team")
   end
 
   def dashboard
