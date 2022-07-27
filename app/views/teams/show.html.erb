@@ -44,6 +44,7 @@
                       <% if (current_user == assign.team.owner) || (current_user == assign.user) %>
                         <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
                       <% end %>
+                      <td><%= link_to I18n.t('views.button.change_owner'), change_team_path(@team, user_id: assign.user.id), method: :patch, class: 'btn btn-sm btn-success' if current_user == assign.team.owner %></td>
                     </tr>
                   <% end %>
                 </tbody>
