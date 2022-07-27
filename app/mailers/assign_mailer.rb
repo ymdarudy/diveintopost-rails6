@@ -11,4 +11,9 @@ class AssignMailer < ApplicationMailer
     @team = team
     mail to: @team.owner.email, subject: "リーダー権限移動"
   end
+
+  def agenda_delete_mail(agenda)
+    @agenda = agenda
+    mail to: [@agenda.team.owner.email, *@agenda.team.members.pluck(:email)], subject: "アジェンダ削除"
+  end
 end

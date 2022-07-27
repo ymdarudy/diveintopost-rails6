@@ -34,6 +34,9 @@
               <i class="fa fa-circle-o nav-icon"></i>
               <p>
                 <%= agenda.title %>
+                <% if (current_user == agenda.user) || (current_user == agenda.team.owner) %>
+                  <object><%= link_to I18n.t('views.button.delete'), agenda_path(agenda), method: :delete, class: 'btn btn-sm btn-danger' %></object>
+                <% end %>
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
