@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resource :user
 
   resources :teams do
+    patch "change", on: :member
     resources :assigns, only: %i[create destroy]
     resources :agendas, shallow: true do
       resources :articles do
